@@ -26,9 +26,22 @@ public class WaveSpawner : MonoBehaviour
     private bool isRoundActive = false;
     private string RoundNumber;
     public Text RoundNumberText;
-    private void Start()
+    public static WaveSpawner Instance;
+
+    private Coroutine waveCoroutine;
+    private void Awake()
     {
-       StartCoroutine(StartWaves());
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        Time.timeScale = 1.0f;
+
+
+    }
+    private void Start() 
+    {
+       waveCoroutine = StartCoroutine(StartWaves());
         ResetRound();
     }
 
@@ -145,6 +158,24 @@ public class WaveSpawner : MonoBehaviour
         RoundNumberText.gameObject.SetActive(false);
     }
 
+    public void OnDadClicked()
+    {
+        if (waveCoroutine != null)
+        {
+            StopCoroutine(waveCoroutine);
+        }
 
+        DestroyPreviousEnemies();
+        currentWaveIndex++;
+
+        if (currentWaveIndex < waves.Length)
+        {
+            waveCoroutine = StartCoroutine(StartWaves());
+        }
+        else
+        {
+            Debug.Log("All waves completed!");
+        }
+    }
 
 }

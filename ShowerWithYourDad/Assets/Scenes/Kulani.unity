@@ -503,7 +503,7 @@ MonoBehaviour:
     - {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
     - {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
     NumberToSpawn: 3
-    TimeBeforeThisWave: 0.5
+    TimeBeforeThisWave: 0.2
     roundDuration: 5
   - waveName: Round 2
     EnemiesInWave:
@@ -511,7 +511,7 @@ MonoBehaviour:
     - {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
     - {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
     NumberToSpawn: 3
-    TimeBeforeThisWave: 0.5
+    TimeBeforeThisWave: 0.2
     roundDuration: 5
   - waveName: ' Round 3'
     EnemiesInWave:
@@ -530,7 +530,7 @@ MonoBehaviour:
     - {fileID: 3320797716099168073, guid: e3d3cfbc3f9adc14bbe407d909b1bd01, type: 3}
     - {fileID: 3320797716099168073, guid: e3d3cfbc3f9adc14bbe407d909b1bd01, type: 3}
     NumberToSpawn: 6
-    TimeBeforeThisWave: 0.5
+    TimeBeforeThisWave: 0.2
     roundDuration: 5
   spawnpoints:
   - {fileID: 83828326}
