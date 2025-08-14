@@ -532,12 +532,12 @@ MonoBehaviour:
     NumberToSpawn: 6
     TimeBeforeThisWave: 0.2
     roundDuration: 5
-  - waveName: 'Round 4 '
+  - waveName: Round 5
     EnemiesInWave:
-    - {fileID: 5587726020767786820, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
-    - {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
-    - {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
-    NumberToSpawn: 6
+    - {fileID: 5587726020767786820, guid: db490dc4a5fba9c4796e750a7c0be7f8, type: 3}
+    - {fileID: 5510221248971352444, guid: 14f4216644fade945b94daa9421d8ff6, type: 3}
+    - {fileID: 4138462986995840826, guid: 0a594bacddbe38540b6f2450ff1c23fa, type: 3}
+    NumberToSpawn: 3
     TimeBeforeThisWave: 0.2
     roundDuration: 5
   spawnpoints:
