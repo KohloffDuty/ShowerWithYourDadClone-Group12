@@ -6,176 +6,174 @@ using UnityEngine.UI;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [System.Serializable]
-    public class Wave
-    {
-        public string waveName;
-        public GameObject[] EnemiesInWave;
-        public int NumberToSpawn;
-        public float TimeBeforeThisWave; // Delay before starting this wave
-        public float roundDuration = 15f; // Time before wave ends
-    }
+	[System.Serializable]
+	public class Wave
+	{
+		public string waveName;
+		public GameObject[] EnemiesInWave;
+		public int NumberToSpawn;
+		public float TimeBeforeThisWave; // Delay before starting this wave
+		public float roundDuration = 15f; // Time before wave ends
+	}
 
-    public Wave[] waves;
-    [SerializeField] private Transform[] spawnpoints;
+	public Wave[] waves;
+	[SerializeField] private Transform[] spawnpoints;
 
-    private int currentWaveIndex = 0;
-    public Image timerFillImage; // Assign your UI Image here in the Inspector
-    public float totalTime = 60f; // Total time in seconds
-    private float currentTime;
-    private bool isRoundActive = false;
-    private string RoundNumber;
-    public Text RoundNumberText;
-    public static WaveSpawner Instance;
+	private int currentWaveIndex = 0;
+	public Image timerFillImage; // Assign your UI Image here in the Inspector
+	public float totalTime = 60f; // Total time in seconds
+	private float currentTime;
+	private bool isRoundActive = false;
+	private string RoundNumber;
+	public Text RoundNumberText;
+	public static WaveSpawner Instance;
 
-    private Coroutine waveCoroutine;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        Time.timeScale = 1.0f;
+	private Coroutine waveCoroutine;
+	private void Awake()
+	{
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		Time.timeScale = 1.0f;
+	}
+	private void Start()
+	{
+		waveCoroutine = StartCoroutine(StartWaves());
+		ResetRound();
+	}
 
+	void Update()
+	{
+		if (isRoundActive && currentTime > 0)
+		{
+			currentTime -= Time.deltaTime;
+			timerFillImage.fillAmount = currentTime / totalTime;
+		}
+		else
+		{
+			currentTime = 0;
+		}
+	}
 
-    }
-    private void Start() 
-    {
-       waveCoroutine = StartCoroutine(StartWaves());
-        ResetRound();
-    }
+	private IEnumerator StartWaves()
+	{
+		while (currentWaveIndex < waves.Length)
+		{
+			Wave currentWave = waves[currentWaveIndex];
 
-    void Update()
-    {
-        if ( isRoundActive && currentTime > 0)
-        {
-            currentTime -= Time.deltaTime;
-            timerFillImage.fillAmount = currentTime / totalTime;
-        }
-        else
-        {
-            currentTime = 0;
-        }
-    }
+			// Wait before this wave starts
+			yield return new WaitForSeconds(currentWave.TimeBeforeThisWave);
 
-    private IEnumerator StartWaves()
-    {
-        while (currentWaveIndex < waves.Length)
-        {
-            Wave currentWave = waves[currentWaveIndex];
+			// Destroy leftover enemies from the previous wave
+			DestroyPreviousEnemies();
 
-            // Wait before this wave starts
-            yield return new WaitForSeconds(currentWave.TimeBeforeThisWave);
-
-            // Destroy leftover enemies from the previous wave
-            DestroyPreviousEnemies();
-
-            // Reset timer for the new round
-            ResetRound(); 
-            isRoundActive = true;
+			// Reset timer for the new round
+			ResetRound();
+			isRoundActive = true;
 
 
-            StartCoroutine(ShowRoundNumberUI(currentWave.waveName));
+			StartCoroutine(ShowRoundNumberUI(currentWave.waveName));
 
-            // Spawn all enemies for this wave
-            SpawnWave(currentWave);
+			// Spawn all enemies for this wave
+			SpawnWave(currentWave);
 
-            // Wait until round duration ends
-            yield return new WaitForSeconds(currentWave.roundDuration);
+			// Wait until round duration ends
+			yield return new WaitForSeconds(currentWave.roundDuration);
 
-            currentWaveIndex++;
-        }
-    }
+			currentWaveIndex++;
+		}
+	}
 
-    private void DestroyPreviousEnemies()
-    {
-        GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in existingEnemies)
-        {
-            Destroy(enemy);
-        }
-        GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obstacle in existingObstacles)
-        {
-            Destroy(obstacle);
-        }
-    }
+	private void DestroyPreviousEnemies()
+	{
+		GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+		foreach (GameObject enemy in existingEnemies)
+		{
+			Destroy(enemy);
+		}
+		GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+		foreach (GameObject obstacle in existingObstacles)
+		{
+			Destroy(obstacle);
+		}
+	}
 
-    public void ResetRound()
-    {
-        currentTime = totalTime;
-        timerFillImage.fillAmount = 1f;
-    }
+	public void ResetRound()
+	{
+		currentTime = totalTime;
+		timerFillImage.fillAmount = 1f;
+	}
 
-    private void SpawnWave(Wave wave)
-    {
-        // Copy spawnpoints to a temporary list so we can remove as we use them
-        List<Transform> availableSpawns = new List<Transform>(spawnpoints);
+	private void SpawnWave(Wave wave)
+	{
+		// Copy spawnpoints to a temporary list so we can remove as we use them
+		List<Transform> availableSpawns = new List<Transform>(spawnpoints);
 
-        // Make sure there are enough spawn points (optional check)
-        if (wave.NumberToSpawn > availableSpawns.Count)
-        {
-            Debug.LogWarning("Not enough unique spawn points for all enemies in this wave.");
-        }
+		// Make sure there are enough spawn points (optional check)
+		if (wave.NumberToSpawn > availableSpawns.Count)
+		{
+			Debug.LogWarning("Not enough unique spawn points for all enemies in this wave.");
+		}
 
-        int totalSpawned = 0;
+		int totalSpawned = 0;
 
-        // Loop through all enemy types 
+		// Loop through all enemy types 
 
-        // k is enemy index 
-        for (int k = 0; k < wave.EnemiesInWave.Length; k++)
-        {
-            for (int count = 0; count < wave.NumberToSpawn / wave.EnemiesInWave.Length; count++)
-            {
-                if (availableSpawns.Count == 0)
-                {
-                    availableSpawns = new List<Transform>(spawnpoints); // refill if we run out
-                }
+		// k is enemy index 
+		for (int k = 0; k < wave.EnemiesInWave.Length; k++)
+		{
+			for (int count = 0; count < wave.NumberToSpawn / wave.EnemiesInWave.Length; count++)
+			{
+				if (availableSpawns.Count == 0)
+				{
+					availableSpawns = new List<Transform>(spawnpoints); // refill if we run out
+				}
 
-                int spawnIndex = Random.Range(0, availableSpawns.Count);
+				int spawnIndex = Random.Range(0, availableSpawns.Count);
 
-                Instantiate(
-                    wave.EnemiesInWave[k],
-                    availableSpawns[spawnIndex].position,
-                    availableSpawns[spawnIndex].rotation
-                );
+				Instantiate(
+						wave.EnemiesInWave[k],
+						availableSpawns[spawnIndex].position,
+						availableSpawns[spawnIndex].rotation
+				);
 
-                availableSpawns.RemoveAt(spawnIndex);
-                totalSpawned++;
+				availableSpawns.RemoveAt(spawnIndex);
+				totalSpawned++;
 
-                if (totalSpawned >= wave.NumberToSpawn) return;
-            }
-        }
-    }
-    private IEnumerator ShowRoundNumberUI(string text)
-    {
-        RoundNumberText.text = $"{text}";
-        RoundNumberText.gameObject.SetActive(true);
+				if (totalSpawned >= wave.NumberToSpawn) return;
+			}
+		}
+	}
+	private IEnumerator ShowRoundNumberUI(string text)
+	{
+		RoundNumberText.text = $"{text}";
+		RoundNumberText.gameObject.SetActive(true);
 
-        // Show for 2 seconds
-        yield return new WaitForSeconds(2f);
+		// Show for 2 seconds
+		yield return new WaitForSeconds(5f);
 
-        RoundNumberText.gameObject.SetActive(false);
-    }
+		RoundNumberText.gameObject.SetActive(false);
+	}
 
-    public void OnDadClicked()
-    {
-        if (waveCoroutine != null)
-        {
-            StopCoroutine(waveCoroutine);
-        }
+	public void OnDadClicked()
+	{
+		if (waveCoroutine != null)
+		{
+			StopCoroutine(waveCoroutine);
+		}
 
-        DestroyPreviousEnemies();
-        currentWaveIndex++;
+		DestroyPreviousEnemies();
+		currentWaveIndex++;
 
-        if (currentWaveIndex < waves.Length)
-        {
-            waveCoroutine = StartCoroutine(StartWaves());
-        }
-        else
-        {
-            Debug.Log("All waves completed!");
-        }
-    }
+		if (currentWaveIndex < waves.Length)
+		{
+			waveCoroutine = StartCoroutine(StartWaves());
+		}
+		else
+		{
+			Debug.Log("All waves completed!");
+		}
+	}
 
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7366006607370157183}
   - component: {fileID: 5891925676967180981}
   m_Layer: 0
-  m_Name: BdadT
+  m_Name: BDad
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1893822521312163539, guid: d7d0c08017a50f84bab36ebadd848aaf, type: 3}
+  m_Sprite: {fileID: 5009736933530611641, guid: 4fa5eed6fcc901446be61bf2591cf7cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -118,7 +118,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
