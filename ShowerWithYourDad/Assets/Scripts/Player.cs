@@ -8,12 +8,14 @@ public class Player : MonoBehaviour
 	private Vector2 moveInput;
 
 	public GameObject chocolateSon;
-	//public GameObject caramelSon;
-	//public GameObject vanillaSon;
+	public GameObject caramelSon;
+	public GameObject vanillaSon;
 
-	public GameObject chocolateDad;
-	public GameObject caramelDad;
-	public GameObject vanillaDad;
+	//public SpriteRenderer chocSon;
+	//public SpriteRenderer caraSon;
+	//public SpriteRenderer vaniSon;
+		
+	private float originalSpee;
 
 	public UIPanel score;
 	public float points = 10f;
@@ -25,7 +27,7 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		// Get input from arrow keys
+		// Input from arrow keys
 		float moveX = Input.GetAxisRaw("Horizontal"); // Left/Right
 		float moveY = Input.GetAxisRaw("Vertical");   // Up/Down
 
@@ -39,32 +41,50 @@ public class Player : MonoBehaviour
 		rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
 	}
 
-	// Score update when son and dad objects collide based on their different son-dad types.
-	//private void OnTriggerEnter2D(Collider2D collision) 
-	//{
-	//	if (collision.gameObject.CompareTag("chocolate"))
-	//	{
-	//		score.AddScore(points);
-	//		Debug.Log("You found your dad!");
-	//	}
-	//}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		//Debug.Log("Here");
-
-		if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Chocolate"))
+		//Collision between chocolate dad and son
+		if (chocolateSon.CompareTag("Chocolate"))
 		{
-			score.AddScore(points);
-			Debug.Log("You found your dad!");
+			if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Chocolate"))
+			{
+				score.AddScore(points);
+				Debug.Log("You found your dad!");
+			}
 		}
 
-		
-		//if (collision.gameObject.CompareTag("chocolate"))
+		//Collision between caramel dad and son
+		//if (caramelSon.CompareTag("Caramel"))
 		//{
-		//	score.AddScore(points);
-		//	Debug.Log("You found your dad!");
+		//	if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Caramel"))
+		//	{
+		//		score.AddScore(points);
+		//		Debug.Log("You found your dad!");
+		//	}
 		//}
+
+		////Collision between vanilla dad and son
+		//if (vanillaSon.CompareTag("Vanilla"))
+		//{
+		//	if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Vanilla"))
+		//	{
+		//		score.AddScore(points);
+		//		Debug.Log("You found your dad!");
+		//	}
+		//}
+
+
+		if (collision.gameObject.CompareTag("Obstacle"))
+		{
+			StartCoroutine(SlowDown());
+		}
 	}
 
+	private System.Collections.IEnumerator SlowDown()
+	{
+		moveSpeed = 2f; // Apply slow
+		yield return new WaitForSeconds(2f);
+		moveSpeed = 5f; // Restore normal speed
+	}
 }

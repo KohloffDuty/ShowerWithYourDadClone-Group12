@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2546590531595504761}
   - component: {fileID: 6309339480421429240}
   - component: {fileID: 2677733180357595308}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GDadT
   m_TagString: Enemy
   m_Icon: {fileID: 0}
