@@ -880,10 +880,10 @@ MonoBehaviour:
     - {fileID: 2224742751727054304, guid: e26b42cd1e548b14993bbaa875db86ad, type: 3}
     - {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
     - {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
-    SonsInWave:
     - {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
-    NumberToSpawn: 3
-    NumberSonsToSpawn: 1
+    SonsInWave: []
+    NumberToSpawn: 4
+    NumberSonsToSpawn: 0
     TimeBeforeThisWave: 0.2
     roundDuration: 5
   - waveName: Round 2
@@ -891,10 +891,10 @@ MonoBehaviour:
     - {fileID: 5587726020767786820, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
     - {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
     - {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
-    SonsInWave:
     - {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
-    NumberToSpawn: 3
-    NumberSonsToSpawn: 1
+    SonsInWave: []
+    NumberToSpawn: 4
+    NumberSonsToSpawn: 0
     TimeBeforeThisWave: 0.2
     roundDuration: 5
   - waveName: ' Round 3'
@@ -913,8 +913,8 @@ MonoBehaviour:
     - {fileID: 5587726020767786820, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
     - {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
     - {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
-    - {fileID: 3320797716099168073, guid: e3d3cfbc3f9adc14bbe407d909b1bd01, type: 3}
-    - {fileID: 3320797716099168073, guid: e3d3cfbc3f9adc14bbe407d909b1bd01, type: 3}
+    - {fileID: 3445642047667362234, guid: 40e2cf852ca618641b786b11a0889b8b, type: 3}
+    - {fileID: 3445642047667362234, guid: 40e2cf852ca618641b786b11a0889b8b, type: 3}
     - {fileID: 3320797716099168073, guid: e3d3cfbc3f9adc14bbe407d909b1bd01, type: 3}
     SonsInWave:
     - {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
@@ -923,6 +923,20 @@ MonoBehaviour:
     TimeBeforeThisWave: 0.2
     roundDuration: 5
   - waveName: Round 5
+    EnemiesInWave:
+    - {fileID: 5587726020767786820, guid: db490dc4a5fba9c4796e750a7c0be7f8, type: 3}
+    - {fileID: 5510221248971352444, guid: 14f4216644fade945b94daa9421d8ff6, type: 3}
+    - {fileID: 4138462986995840826, guid: 0a594bacddbe38540b6f2450ff1c23fa, type: 3}
+    - {fileID: 3445642047667362234, guid: 40e2cf852ca618641b786b11a0889b8b, type: 3}
+    - {fileID: 3445642047667362234, guid: 40e2cf852ca618641b786b11a0889b8b, type: 3}
+    - {fileID: 3320797716099168073, guid: e3d3cfbc3f9adc14bbe407d909b1bd01, type: 3}
+    SonsInWave:
+    - {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
+    NumberToSpawn: 6
+    NumberSonsToSpawn: 1
+    TimeBeforeThisWave: 0.2
+    roundDuration: 5
+  - waveName: Round 6
     EnemiesInWave:
     - {fileID: 5587726020767786820, guid: db490dc4a5fba9c4796e750a7c0be7f8, type: 3}
     - {fileID: 5510221248971352444, guid: 14f4216644fade945b94daa9421d8ff6, type: 3}
