@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		//Collision between chocolate dad and son
-		if (chocolateSon.CompareTag("Chocolate"))
+		if (chocolateSon.CompareTag("chocolate"))
 		{
 			if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Chocolate"))
 			{

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 43874908268910924}
   - component: {fileID: 7360312196209080963}
   - component: {fileID: -4180094780664182829}
+  - component: {fileID: -2452894539758708648}
   m_Layer: 0
   m_Name: vanillaKid
   m_TagString: Vanilla
@@ -162,3 +163,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.22, y: 1.86}
   m_EdgeRadius: 0
+--- !u!114 &-2452894539758708648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645382543473835879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fa18f3526109948849bef5dfca429a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  chocolateSon: {fileID: 0}
+  caramelSon: {fileID: 0}
+  vanillaSon: {fileID: 3645382543473835879}
+  score: {fileID: 0}
+  points: 10

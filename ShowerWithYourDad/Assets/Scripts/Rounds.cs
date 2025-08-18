@@ -11,15 +11,18 @@ public class WaveSpawner : MonoBehaviour
 	{
 		public string waveName;
 		public GameObject[] EnemiesInWave;
-		public int NumberToSpawn;
+        public GameObject[] SonsInWave;
+        public int NumberToSpawn;
+		public int NumberSonsToSpawn;
 		public float TimeBeforeThisWave; // Delay before starting this wave
 		public float roundDuration = 15f; // Time before wave ends
 	}
 
 	public Wave[] waves;
 	[SerializeField] private Transform[] spawnpoints;
+    [SerializeField] private Transform[] SonSpawnpoints;
 
-	private int currentWaveIndex = 0;
+    private int currentWaveIndex = 0;
 	public Image timerFillImage; // Assign your UI Image here in the Inspector
 	public float totalTime = 60f; // Total time in seconds
 	private float currentTime;
@@ -110,47 +113,88 @@ public class WaveSpawner : MonoBehaviour
 		timerFillImage.fillAmount = 1f;
 	}
 
-	private void SpawnWave(Wave wave)
-	{
-		// Copy spawnpoints to a temporary list so we can remove as we use them
-		List<Transform> availableSpawns = new List<Transform>(spawnpoints);
+    // Utility function to shuffle any list
+    private void ShuffleList<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randIndex = Random.Range(i, list.Count);
+            (list[i], list[randIndex]) = (list[randIndex], list[i]);
+        }
+    }
 
-		// Make sure there are enough spawn points (optional check)
-		if (wave.NumberToSpawn > availableSpawns.Count)
-		{
-			Debug.LogWarning("Not enough unique spawn points for all enemies in this wave.");
-		}
+    private void SpawnWave(Wave wave)
+    {
+        // --- ENEMY SPAWNING ---
+        List<Transform> availableSpawns = new List<Transform>(spawnpoints);
 
-		int totalSpawned = 0;
+        if (wave.NumberToSpawn > availableSpawns.Count)
+        {
+            Debug.LogWarning("Not enough unique spawn points for all enemies in this wave.");
+        }
 
-		// Loop through all enemy types 
+        int totalSpawned = 0;
 
-		// k is enemy index 
-		for (int k = 0; k < wave.EnemiesInWave.Length; k++)
-		{
-			for (int count = 0; count < wave.NumberToSpawn / wave.EnemiesInWave.Length; count++)
-			{
-				if (availableSpawns.Count == 0)
-				{
-					availableSpawns = new List<Transform>(spawnpoints); // refill if we run out
-				}
+        for (int k = 0; k < wave.EnemiesInWave.Length; k++)
+        {
+            for (int count = 0; count < wave.NumberToSpawn / wave.EnemiesInWave.Length; count++)
+            {
+                if (availableSpawns.Count == 0)
+                {
+                    availableSpawns = new List<Transform>(spawnpoints); // refill if we run out
+                }
 
-				int spawnIndex = Random.Range(0, availableSpawns.Count);
+                int spawnIndex = Random.Range(0, availableSpawns.Count);
+
+                Instantiate(
+                    wave.EnemiesInWave[k],
+                    availableSpawns[spawnIndex].position,
+                    availableSpawns[spawnIndex].rotation
+                );
+
+                availableSpawns.RemoveAt(spawnIndex);
+                totalSpawned++;
+
+                if (totalSpawned >= wave.NumberToSpawn) break;
+            }
+        }
+
+        // --- SON SPAWNING ---
+        if (wave.SonsInWave != null && wave.SonsInWave.Length > 0)
+        {
+            List<Transform> availableSonSpawns = new List<Transform>(SonSpawnpoints);
+
+            int sonsToSpawn = Mathf.Min(wave.NumberSonsToSpawn, wave.SonsInWave.Length);
+
+            List<GameObject> chosenSons = new List<GameObject>(wave.SonsInWave);
+
+            // Only shuffle if more than one son
+            if (chosenSons.Count > 1)
+            {
+                ShuffleList(chosenSons);
+            }
+
+            for (int h = 0; h < sonsToSpawn; h++)
+            {
+                if (availableSonSpawns.Count == 0)
+                {
+                    availableSonSpawns = new List<Transform>(SonSpawnpoints); // refill if we run out
+                }
+
+                int spawnIndex = Random.Range(0, availableSonSpawns.Count);
 
 				Instantiate(
-						wave.EnemiesInWave[k],
-						availableSpawns[spawnIndex].position,
-						availableSpawns[spawnIndex].rotation
-				);
+                    chosenSons[h],
+                    availableSonSpawns[spawnIndex].position,
+                    availableSonSpawns[spawnIndex].rotation
+                );
 
-				availableSpawns.RemoveAt(spawnIndex);
-				totalSpawned++;
+                availableSonSpawns.RemoveAt(spawnIndex);
+            }
+        }
+    }
 
-				if (totalSpawned >= wave.NumberToSpawn) return;
-			}
-		}
-	}
-	private IEnumerator ShowRoundNumberUI(string text)
+    private IEnumerator ShowRoundNumberUI(string text)
 	{
 		RoundNumberText.text = $"{text}";
 		RoundNumberText.gameObject.SetActive(true);
