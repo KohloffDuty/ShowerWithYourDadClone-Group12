@@ -7,11 +7,11 @@ public class UIPanel : MonoBehaviour
 	public float startTime = 30f; // Time in seconds
 	private float currentTime;
 
-	public TMP_Text timerText; // Assign in Inspector
+	//public TMP_Text timerText; // Assign in Inspector
 	public TMP_Text scoreText;
 	public float score = 0;
 
-	public GameObject endPanel;
+	//public GameObject endPanel;
 
 	void Start()
 	{
@@ -32,17 +32,17 @@ public class UIPanel : MonoBehaviour
 		}
 
 		// Calculate minutes, seconds, and milliseconds
-		int minutes = Mathf.FloorToInt(currentTime / 60f);
-		int seconds = Mathf.FloorToInt(currentTime % 60f);
-		int milliseconds = Mathf.FloorToInt((currentTime * 1000f) % 1000f);
+		//int minutes = Mathf.FloorToInt(currentTime / 60f);
+		//int seconds = Mathf.FloorToInt(currentTime % 60f);
+		//int milliseconds = Mathf.FloorToInt((currentTime * 1000f) % 1000f);
 
-		// Format: MM:SS:MS (e.g. 00:29:456)
-		timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+		//// Format: MM:SS:MS (e.g. 00:29:456)
+		//timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
 
-		if(currentTime == 0)
-		{
-			endPanel.SetActive(true);
-		}
+		//if(currentTime == 0)
+		//{
+		//	endPanel.SetActive(true);
+		//}
 	}
 
 	// Updates the score
