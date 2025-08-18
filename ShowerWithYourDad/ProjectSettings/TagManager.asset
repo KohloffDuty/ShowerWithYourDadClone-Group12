@@ -6,7 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Obstacle
-  - chocolate
+  - Caramel
+  - Vanilla
+  - Chocolate
   layers:
   - Default
   - TransparentFX

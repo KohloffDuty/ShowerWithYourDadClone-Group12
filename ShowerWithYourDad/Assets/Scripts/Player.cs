@@ -75,10 +75,10 @@ public class Player : MonoBehaviour
 		//}
 
 
-		if (collision.gameObject.CompareTag("Obstacle"))
-		{
-			StartCoroutine(SlowDown());
-		}
+		//if (collision.gameObject.CompareTag("Obstacle"))
+		//{
+		//	StartCoroutine(SlowDown());
+		//}
 	}
 
 	private System.Collections.IEnumerator SlowDown()

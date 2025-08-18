@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 533446543}
   m_Layer: 6
   m_Name: Player
-  m_TagString: chocolate
+  m_TagString: Chocolate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -523,9 +523,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   chocolateSon: {fileID: 533446542}
-  chocolateDad: {fileID: 5587726020767786820, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
-  caramelDad: {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
-  vanillaDad: {fileID: 4138462986995840826, guid: c54b779ead531984f968c66763182c92, type: 3}
+  caramelSon: {fileID: 7201847267762199223, guid: d3d8e5088b3f08349be961bf0a724061, type: 3}
+  vanillaSon: {fileID: 3645382543473835879, guid: bb91f36ab22a103479c46d11dca664f5, type: 3}
   score: {fileID: 702550845}
   points: 10
 --- !u!50 &533446545
