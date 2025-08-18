@@ -88,26 +88,37 @@ public class WaveSpawner : MonoBehaviour
 		}
 	}
 
-	private void DestroyPreviousEnemies()
-	{
-		GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-		foreach (GameObject enemy in existingEnemies)
-		{
-			Destroy(enemy);
-		}
-		GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-		foreach (GameObject obstacle in existingObstacles)
-		{
-			Destroy(obstacle);
-		}
-        GameObject[] existingSons = GameObject.FindGameObjectsWithTag("chocolate");
-        foreach (GameObject player in existingSons)
+    private void DestroyPreviousEnemies()
+    {
+        // Destroy enemies
+        GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in existingEnemies)
         {
-            Destroy(player);
+            Destroy(enemy);
+        }
+
+        // Destroy obstacles
+        GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject obstacle in existingObstacles)
+        {
+            Destroy(obstacle);
+        }
+
+        // Destroy sons (with multiple tags)
+        List<GameObject> existingSons = new List<GameObject>();
+
+        existingSons.AddRange(GameObject.FindGameObjectsWithTag("chocolate"));
+        existingSons.AddRange(GameObject.FindGameObjectsWithTag("Vanilla"));
+        existingSons.AddRange(GameObject.FindGameObjectsWithTag("Caramel"));
+
+        foreach (GameObject son in existingSons)
+        {
+            Destroy(son);
         }
     }
 
-	public void ResetRound()
+
+    public void ResetRound()
 	{
 		currentTime = totalTime;
 		timerFillImage.fillAmount = 1f;
