@@ -97,7 +97,12 @@ public class WaveSpawner : MonoBehaviour
 		{
 			Destroy(obstacle);
 		}
-	}
+        GameObject[] existingSons = GameObject.FindGameObjectsWithTag("chocolate");
+        foreach (GameObject player in existingSons)
+        {
+            Destroy(player);
+        }
+    }
 
 	public void ResetRound()
 	{
