@@ -232,7 +232,7 @@ public class WaveSpawner : MonoBehaviour
     }
 
 
-   /* public void EndRoundAndContinue()
+    public void EmergencyEndRoundAndContinue()
     {
         // Destroy leftover enemies/sons
         DestroyPreviousEnemies();
@@ -241,10 +241,10 @@ public class WaveSpawner : MonoBehaviour
         ResetRound();
 
         // Start the next round after 2 seconds
-        StartCoroutine(StartNextRound());
+        StartCoroutine(Player.instance2.StartNextRound());
     }
 
-    public System.Collections.IEnumerator StartNextRound()
+   /* public System.Collections.IEnumerator StartNextRound()
     {
         yield return new WaitForSeconds(2f); // Delay before next wave
         StartCoroutine(WaveSpawner.Instance.StartWaves());

@@ -3,46 +3,88 @@ using UnityEngine;
 public class VanillaCollider : MonoBehaviour
 {
     public int points = 10;
-    public GameObject VanillaSon;
+    public GameObject VanillaDad; // Reference to the correct dad
 
-    private bool roundEnded = false; // lock to stop multiple triggers
+    private bool roundEnded = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (roundEnded) return; // prevent multiple calls
+        if (roundEnded) return;
 
-        //  Collision between Vanilla son and dad
-        if (VanillaSon != null && VanillaSon.CompareTag("Vanilla"))
+        Debug.Log($"{gameObject.name} (son) collided with {collision.gameObject.name}");
+
+        // Handle obstacles first
+        if (collision.CompareTag("Obstacle"))
         {
-            if (collision.CompareTag("EnemyW") &&
-                collision.gameObject.layer == LayerMask.NameToLayer("Vanilla"))
-            {
-                roundEnded = true;
-                UIPanel.Instance1.AddScore(points);
-                WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.Coin);
-                Debug.Log("You found your dad!");
-                    Player.instance2.EndRoundAndContinue();
-            }
-        }
-        //  Hit an obstacle
-        else if (collision.CompareTag("Obstacle"))
-        {
-            roundEnded = true;
-            // WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.ObstacleHit);
+            roundEnded = true; 
+
             Debug.Log("Hit an obstacle!");
-           // UIPanel.Instance1.EndRoundAndContinue(); // optional, end round if obstacle counts
+            StartCoroutine(Player.instance2.SlowDown());
+            SafeEndRound();
+            return;
         }
-        // ? Hit something else
+
+        // Check if this is the correct dad
+        if (collision.gameObject == VanillaDad)
+        {
+            HandleSuccess("Found correct dad!");
+        }
+        // Check if this is a wrong dad (another vanilla)
+        else if (collision.CompareTag("EnemyW") || collision.CompareTag("Vanilla"))
+        {
+            HandleSuccess("Found correct dad!");
+        }
+        // Anything else
         else
         {
-            roundEnded = true;
-            WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.WrongHit);
-            Player.instance2.EndRoundAndContinue();
-            Debug.Log($"Hit something else: {collision.tag}");
+            HandleWrongCollision("Unexpected collision!");
         }
     }
 
-    // ? Reset flag when new round starts
+    private void HandleSuccess(string message)
+    {
+        roundEnded = true;
+        if (UIPanel.Instance1 != null)
+        {
+            UIPanel.Instance1.AddScore(points);
+        }
+        if (WaveSpawner.Instance != null)
+        {
+            WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.Coin);
+        }
+        Debug.Log(message);
+        SafeEndRound();
+    }
+
+    private void HandleWrongCollision(string message)
+    {
+        roundEnded = true;
+        if (WaveSpawner.Instance != null)
+        {
+            WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.WrongHit);
+        }
+        Debug.Log(message);
+        SafeEndRound();
+    }
+
+    private void SafeEndRound()
+    {
+        if (Player.instance2 != null)
+        {
+            Player.instance2.EndRoundAndContinue();
+        }
+        else
+        {
+            Debug.LogWarning("Player instance is null, cannot end round");
+            // Use the non-deprecated method
+            Player player = FindAnyObjectByType<Player>();
+            if (player != null)
+            {
+                WaveSpawner.Instance.EmergencyEndRoundAndContinue();
+            }
+        }
+    }
+
     public void ResetRoundFlag()
     {
         roundEnded = false;
