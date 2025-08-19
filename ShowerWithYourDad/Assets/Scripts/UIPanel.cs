@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class UIPanel : MonoBehaviour
 {
@@ -39,19 +40,7 @@ public class UIPanel : MonoBehaviour
 		{
 			currentTime = 0;
 		}
-
-		// Calculate minutes, seconds, and milliseconds
-		//int minutes = Mathf.FloorToInt(currentTime / 60f);
-		//int seconds = Mathf.FloorToInt(currentTime % 60f);
-		//int milliseconds = Mathf.FloorToInt((currentTime * 1000f) % 1000f);
-
-		//// Format: MM:SS:MS (e.g. 00:29:456)
-		//timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
-
-		//if(currentTime == 0)
-		//{
-		//	endPanel.SetActive(true);
-		//}
+				
 	}
 
 	// Updates the score
