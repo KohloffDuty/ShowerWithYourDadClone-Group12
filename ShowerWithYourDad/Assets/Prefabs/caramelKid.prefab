@@ -193,5 +193,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b57b9239bb48842ad162a028d18870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CaramelSon: {fileID: 7201847267762199223}
   points: 10
+  CaramelDad: {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
