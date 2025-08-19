@@ -134,7 +134,7 @@ MonoBehaviour:
   chocolateSon: {fileID: 2820416077298083138}
   caramelSon: {fileID: 7201847267762199223, guid: d3d8e5088b3f08349be961bf0a724061, type: 3}
   vanillaSon: {fileID: 3645382543473835879, guid: bb91f36ab22a103479c46d11dca664f5, type: 3}
-  points: 10
+  points: 15
 --- !u!61 &5100435021500447087
 BoxCollider2D:
   m_ObjectHideFlags: 0

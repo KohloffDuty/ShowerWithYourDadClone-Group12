@@ -56,7 +56,25 @@ public class StartPanel : MonoBehaviour
 		}
 
 	}
+
+	public void Update()
+	{
+		if (SceneManager.GetActiveScene().name == "End")
+		{
+			if (Input.GetKeyDown(KeyCode.Return))
+			{
+				if (madeTop10) { leaderboard.Save(initialsInput.text, Player.instance2.points); }
+				SceneManager.LoadScene("Start");
+			}
+		}
+	}
+
 	public void LoadScene()
+	{
+		SceneManager.LoadScene("Duplicate");
+	}
+
+	public void Restart()
 	{
 		SceneManager.LoadScene("Duplicate");
 	}
