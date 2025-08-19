@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Collections;
+using System.Collections.Generic;
 
 public class UIPanel : MonoBehaviour
 {
@@ -18,7 +20,7 @@ public class UIPanel : MonoBehaviour
         {
             Instance1 = this;
         }
-        Time.timeScale = 1.0f;
+        Time.timeScale = 1.5f;
     }
     void Start()
 	{
@@ -63,4 +65,6 @@ public class UIPanel : MonoBehaviour
 	{
 		scoreText.text = "Score: " + score;
 	}
+    
+
 }

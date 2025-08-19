@@ -202,8 +202,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5587726020767786820, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 941130810102445823}
   m_SourcePrefab: {fileID: 100100000, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
+--- !u!1 &2760177807847244033 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5587726020767786820, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
+  m_PrefabInstance: {fileID: 7765762813753353797}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &941130810102445823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2760177807847244033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77bf1e82d1af4f42a191cc9929c02c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 10
+  ChocolateSon: {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
 --- !u!4 &6528719928028998215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3557601870905756674, guid: b1b3f9dd74aff9e428e509c816cae07f, type: 3}
