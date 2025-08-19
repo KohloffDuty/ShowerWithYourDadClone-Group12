@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 	private float originalSpee;
 
 	//public UIPanel score;
-	public float points = 10f;
+	public int points = 15;
 	public static Player instance2;
 
 	void Start()
