@@ -79,7 +79,7 @@ public class ChocolateCollider1 : MonoBehaviour
             Player player = FindAnyObjectByType<Player>();
             if (player != null)
             {
-                WaveSpawner.Instance.EmergencyEndRoundAndContinue();
+                player.EndRoundAndContinue();
             }
         }
     }
