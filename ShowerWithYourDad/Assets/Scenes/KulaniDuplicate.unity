@@ -812,9 +812,9 @@ MonoBehaviour:
   waves:
   - waveName: Round 8
     EnemiesInWave:
-    - {fileID: 3400779639432336911, guid: 213ecdd20c98056409544ae531915320, type: 3}
-    - {fileID: 3400779639432336911, guid: 213ecdd20c98056409544ae531915320, type: 3}
-    - {fileID: 7966143991498061257, guid: 3a8348afcd616c946b89655506753e62, type: 3}
+    - {fileID: 3509348608596699017, guid: 976123c0e328cc749a250f6eee07d612, type: 3}
+    - {fileID: 3623852655628012648, guid: c7296e3b6fdfc414cae243365c18a8bc, type: 3}
+    - {fileID: 7096490229995985397, guid: d62a9a30dba2da24aad9017a3a5aef59, type: 3}
     SonsInWave:
     - {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
     - {fileID: 7201847267762199223, guid: d3d8e5088b3f08349be961bf0a724061, type: 3}

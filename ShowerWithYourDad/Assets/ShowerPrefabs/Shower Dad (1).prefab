@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 6210414592159442338}
   m_Layer: 0
   m_Name: Shower CurtainTripleLayer(256x256)_0 (4)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
