@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
 	public float moveSpeed = 5f; // Movement speed
@@ -19,11 +20,12 @@ public class Player : MonoBehaviour
 
 	public UIPanel score;
 	public float points = 10f;
+	//public UIPanel UIPanel;
 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
-	}
+	} 
 
 	void Update()
 	{
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		//Collision between chocolate dad and son
-		if (chocolateSon.CompareTag("Chocolate"))
+		if (chocolateSon.CompareTag("chocolate"))
 		{
 			if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Chocolate"))
 			{
