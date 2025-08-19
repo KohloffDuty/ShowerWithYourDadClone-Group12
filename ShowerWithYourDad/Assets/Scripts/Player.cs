@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
 	*
 	}*/
 
-	private System.Collections.IEnumerator SlowDown()
+	public System.Collections.IEnumerator SlowDown()
 	{
 		moveSpeed = 2f; // Apply slow
 		yield return new WaitForSeconds(2f);

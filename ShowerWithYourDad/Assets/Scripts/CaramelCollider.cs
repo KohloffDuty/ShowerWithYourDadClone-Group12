@@ -17,8 +17,9 @@ public class CaramelCollider : MonoBehaviour
         if (collision.CompareTag("Obstacle"))
         {
             roundEnded = true;
+            StartCoroutine(Player.instance2.SlowDown());
             Debug.Log("Hit an obstacle!");
-            Player.instance2.EndRoundAndContinue();
+            SafeEndRound();
             return;
         }
 
@@ -42,13 +43,16 @@ public class CaramelCollider : MonoBehaviour
     private void HandleSuccess(string message)
     {
         roundEnded = true;
-        UIPanel.Instance1.AddScore(points);
+        if (UIPanel.Instance1 != null)
+        {
+            UIPanel.Instance1.AddScore(points);
+        }
         if (WaveSpawner.Instance != null)
         {
             WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.Coin);
         }
         Debug.Log(message);
-        Player.instance2.EndRoundAndContinue();
+        SafeEndRound();
     }
 
     private void HandleWrongCollision(string message)
@@ -59,7 +63,25 @@ public class CaramelCollider : MonoBehaviour
             WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.WrongHit);
         }
         Debug.Log(message);
-        Player.instance2.EndRoundAndContinue();
+        SafeEndRound();
+    }
+
+    private void SafeEndRound()
+    {
+        if (Player.instance2 != null)
+        {
+            Player.instance2.EndRoundAndContinue();
+        }
+        else
+        {
+            Debug.LogWarning("Player instance is null, cannot end round");
+            // Use the non-deprecated method
+            Player player = FindAnyObjectByType<Player>();
+            if (player != null)
+            {
+                WaveSpawner.Instance.EmergencyEndRoundAndContinue();
+            }
+        }
     }
 
     public void ResetRoundFlag()
@@ -67,4 +89,3 @@ public class CaramelCollider : MonoBehaviour
         roundEnded = false;
     }
 }
-
