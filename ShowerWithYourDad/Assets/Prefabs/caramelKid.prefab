@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8572956196437616929}
   - component: {fileID: 8640599856720001111}
   - component: {fileID: 3303031352089059736}
+  - component: {fileID: 1347396331521288731}
   m_Layer: 0
   m_Name: caramelKid
   m_TagString: Caramel
@@ -195,3 +196,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 10
   CaramelDad: {fileID: 5510221248971352444, guid: d9772c06304186c4ab0f69059b08cb40, type: 3}
+--- !u!95 &1347396331521288731
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201847267762199223}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ad0261a6683c09459ba55cf3938fa86, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
