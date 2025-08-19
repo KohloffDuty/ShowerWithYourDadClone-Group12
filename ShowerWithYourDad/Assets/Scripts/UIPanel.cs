@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Collections;
+using System.Collections.Generic;
 
 public class UIPanel : MonoBehaviour
 {
@@ -10,10 +12,17 @@ public class UIPanel : MonoBehaviour
 	//public TMP_Text timerText; // Assign in Inspector
 	public TMP_Text scoreText;
 	public float score = 0;
-
-	//public GameObject endPanel;
-
-	void Start()
+	public static UIPanel Instance1;
+    //public GameObject endPanel;
+    private void Awake()
+    {
+        if (Instance1 == null)
+        {
+            Instance1 = this;
+        }
+        Time.timeScale = 1.5f;
+    }
+    void Start()
 	{
 		currentTime = startTime;
 		score = 0;
@@ -56,4 +65,6 @@ public class UIPanel : MonoBehaviour
 	{
 		scoreText.text = "Score: " + score;
 	}
+    
+
 }

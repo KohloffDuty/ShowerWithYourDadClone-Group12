@@ -1,6 +1,8 @@
-using Unity.VisualScripting;
-using UnityEngine;
 
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -15,19 +17,26 @@ public class Player : MonoBehaviour
 	//public SpriteRenderer chocSon;
 	//public SpriteRenderer caraSon;
 	//public SpriteRenderer vaniSon;
-		
+
 	private float originalSpee;
 
-	public UIPanel score;
+	//public UIPanel score;
 	public float points = 10f;
-	//public UIPanel UIPanel;
-
+	public static Player instance2; 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
-	} 
+	}
+    private void Awake()
+    {
+        if (instance2 == null)
+        {
+            instance2 = this;
+        }
+        Time.timeScale = 1.0f;
+    }
 
-	void Update()
+    void Update()
 	{
 		// Input from arrow keys
 		float moveX = Input.GetAxisRaw("Horizontal"); // Left/Right
@@ -44,44 +53,27 @@ public class Player : MonoBehaviour
 	}
 
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	/*private void OnTriggerEnter2D(Collider2D collision)
 	{
 		//Collision between chocolate dad and son
 		if (chocolateSon.CompareTag("chocolate"))
 		{
 			if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Chocolate"))
 			{
-				score.AddScore(points);
+				UIPanel.Instance1.AddScore(points);
 				Debug.Log("You found your dad!");
+				WaveSpawner.Instance.EndRoundAndContinue();
 			}
 		}
 
-		//Collision between caramel dad and son
-		//if (caramelSon.CompareTag("Caramel"))
-		//{
-		//	if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Caramel"))
-		//	{
-		//		score.AddScore(points);
-		//		Debug.Log("You found your dad!");
-		//	}
-		//}
-
-		////Collision between vanilla dad and son
-		//if (vanillaSon.CompareTag("Vanilla"))
-		//{
-		//	if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Vanilla"))
-		//	{
-		//		score.AddScore(points);
-		//		Debug.Log("You found your dad!");
-		//	}
-		//}
 
 
-		//if (collision.gameObject.CompareTag("Obstacle"))
-		//{
-		//	StartCoroutine(SlowDown());
-		//}
-	}
+		if (collision.gameObject.CompareTag("Obstacle"))
+		{
+			StartCoroutine(SlowDown());
+		} 
+	*
+	}*/
 
 	private System.Collections.IEnumerator SlowDown()
 	{
@@ -89,4 +81,24 @@ public class Player : MonoBehaviour
 		yield return new WaitForSeconds(2f);
 		moveSpeed = 5f; // Restore normal speed
 	}
+
+    public void EndRoundAndContinue()
+    {
+        // Destroy leftover enemies/sons
+        WaveSpawner.Instance.DestroyPreviousEnemies();
+
+        // Reset round state
+        WaveSpawner.Instance.ResetRound();
+
+        // Start the next round after 2 seconds
+        StartCoroutine(StartNextRound());
+    }
+
+    public System.Collections.IEnumerator StartNextRound()
+    {
+        yield return new WaitForSeconds(2f); // Delay before next wave
+        StartCoroutine(WaveSpawner.Instance.StartWaves());
+    }
+
+
 }

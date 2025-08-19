@@ -11,15 +11,18 @@ public class WaveSpawner : MonoBehaviour
 	{
 		public string waveName;
 		public GameObject[] EnemiesInWave;
-		public int NumberToSpawn;
+        public GameObject[] SonsInWave;
+        public int NumberToSpawn;
+		public int NumberSonsToSpawn;
 		public float TimeBeforeThisWave; // Delay before starting this wave
 		public float roundDuration = 15f; // Time before wave ends
 	}
 
 	public Wave[] waves;
 	[SerializeField] private Transform[] spawnpoints;
+    [SerializeField] private Transform[] SonSpawnpoints;
 
-	private int currentWaveIndex = 0;
+    private int currentWaveIndex = 0;
 	public Image timerFillImage; // Assign your UI Image here in the Inspector
 	public float totalTime = 60f; // Total time in seconds
 	private float currentTime;
@@ -29,7 +32,12 @@ public class WaveSpawner : MonoBehaviour
 	public static WaveSpawner Instance;
 
 	private Coroutine waveCoroutine;
-	private void Awake()
+ 
+    public AudioSource src;
+    public AudioClip Coin; 
+    public AudioClip WrongHit;
+
+    private void Awake()
 	{
 		if (Instance == null)
 		{
@@ -56,7 +64,7 @@ public class WaveSpawner : MonoBehaviour
 		}
 	}
 
-	private IEnumerator StartWaves()
+	public IEnumerator StartWaves()
 	{
 		while (currentWaveIndex < waves.Length)
 		{
@@ -85,72 +93,129 @@ public class WaveSpawner : MonoBehaviour
 		}
 	}
 
-	private void DestroyPreviousEnemies()
-	{
-		GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-		foreach (GameObject enemy in existingEnemies)
-		{
-			Destroy(enemy);
-		}
-		GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-		foreach (GameObject obstacle in existingObstacles)
-		{
-			Destroy(obstacle);
-		}
-        GameObject[] existingSons = GameObject.FindGameObjectsWithTag("chocolate");
-        foreach (GameObject player in existingSons)
+    public void DestroyPreviousEnemies()
+    {
+        // Destroy enemies
+        List<GameObject> existingEnemies = new List<GameObject>();  
+
+        existingEnemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        existingEnemies.AddRange(GameObject.FindGameObjectsWithTag("EnemyC"));
+        existingEnemies.AddRange(GameObject.FindGameObjectsWithTag("EnemyW"));
+
+        foreach (GameObject enemy in existingEnemies)
         {
-            Destroy(player);
+            Destroy(enemy);
+        }
+
+        // Destroy obstacles
+        GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject obstacle in existingObstacles)
+        {
+            Destroy(obstacle);
+        }
+
+        // Destroy sons (with multiple tags)
+        List<GameObject> existingSons = new List<GameObject>();
+
+        existingSons.AddRange(GameObject.FindGameObjectsWithTag("chocolate"));
+        existingSons.AddRange(GameObject.FindGameObjectsWithTag("Vanilla"));
+        existingSons.AddRange(GameObject.FindGameObjectsWithTag("Caramel"));
+
+        foreach (GameObject son in existingSons)
+        {
+            Destroy(son);
         }
     }
 
-	public void ResetRound()
+
+    public void ResetRound()
 	{
 		currentTime = totalTime;
 		timerFillImage.fillAmount = 1f;
 	}
 
-	private void SpawnWave(Wave wave)
-	{
-		// Copy spawnpoints to a temporary list so we can remove as we use them
-		List<Transform> availableSpawns = new List<Transform>(spawnpoints);
+    // Utility function to shuffle any list
+    private void ShuffleList<T>(List<T> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randIndex = Random.Range(i, list.Count);
+            (list[i], list[randIndex]) = (list[randIndex], list[i]);
+        }
+    }
 
-		// Make sure there are enough spawn points (optional check)
-		if (wave.NumberToSpawn > availableSpawns.Count)
-		{
-			Debug.LogWarning("Not enough unique spawn points for all enemies in this wave.");
-		}
+    private void SpawnWave(Wave wave)
+    {
+        // --- ENEMY SPAWNING ---
+        List<Transform> availableSpawns = new List<Transform>(spawnpoints);
 
-		int totalSpawned = 0;
+        if (wave.NumberToSpawn > availableSpawns.Count)
+        {
+            Debug.LogWarning("Not enough unique spawn points for all enemies in this wave.");
+        }
 
-		// Loop through all enemy types 
+        int totalSpawned = 0;
 
-		// k is enemy index 
-		for (int k = 0; k < wave.EnemiesInWave.Length; k++)
-		{
-			for (int count = 0; count < wave.NumberToSpawn / wave.EnemiesInWave.Length; count++)
-			{
-				if (availableSpawns.Count == 0)
-				{
-					availableSpawns = new List<Transform>(spawnpoints); // refill if we run out
-				}
+        for (int k = 0; k < wave.EnemiesInWave.Length; k++)
+        {
+            for (int count = 0; count < wave.NumberToSpawn / wave.EnemiesInWave.Length; count++)
+            {
+                if (availableSpawns.Count == 0)
+                {
+                    availableSpawns = new List<Transform>(spawnpoints); // refill if we run out
+                }
 
-				int spawnIndex = Random.Range(0, availableSpawns.Count);
+                int spawnIndex = Random.Range(0, availableSpawns.Count);
+
+                Instantiate(
+                    wave.EnemiesInWave[k],
+                    availableSpawns[spawnIndex].position,
+                    availableSpawns[spawnIndex].rotation
+                );
+
+                availableSpawns.RemoveAt(spawnIndex);
+                totalSpawned++;
+
+                if (totalSpawned >= wave.NumberToSpawn) break;
+            }
+        }
+
+        // --- SON SPAWNING ---
+        if (wave.SonsInWave != null && wave.SonsInWave.Length > 0)
+        {
+            List<Transform> availableSonSpawns = new List<Transform>(SonSpawnpoints);
+
+            int sonsToSpawn = Mathf.Min(wave.NumberSonsToSpawn, wave.SonsInWave.Length);
+
+            List<GameObject> chosenSons = new List<GameObject>(wave.SonsInWave);
+
+            // Only shuffle if more than one son
+            if (chosenSons.Count > 1)
+            {
+                ShuffleList(chosenSons);
+            }
+
+            for (int h = 0; h < sonsToSpawn; h++)
+            {
+                if (availableSonSpawns.Count == 0)
+                {
+                    availableSonSpawns = new List<Transform>(SonSpawnpoints); // refill if we run out
+                }
+
+                int spawnIndex = Random.Range(0, availableSonSpawns.Count);
 
 				Instantiate(
-						wave.EnemiesInWave[k],
-						availableSpawns[spawnIndex].position,
-						availableSpawns[spawnIndex].rotation
-				);
+                    chosenSons[h],
+                    availableSonSpawns[spawnIndex].position,
+                    availableSonSpawns[spawnIndex].rotation
+                );
 
-				availableSpawns.RemoveAt(spawnIndex);
-				totalSpawned++;
+                availableSonSpawns.RemoveAt(spawnIndex);
+            }
+        }
+    }
 
-				if (totalSpawned >= wave.NumberToSpawn) return;
-			}
-		}
-	}
-	private IEnumerator ShowRoundNumberUI(string text)
+    private IEnumerator ShowRoundNumberUI(string text)
 	{
 		RoundNumberText.text = $"{text}";
 		RoundNumberText.gameObject.SetActive(true);
@@ -160,25 +225,29 @@ public class WaveSpawner : MonoBehaviour
 
 		RoundNumberText.gameObject.SetActive(false);
 	}
+    public void PlaySound(AudioClip sound)
+    {
+        Instance.src.clip = sound;
+        Instance.src.Play();
+    }
 
-	public void OnDadClicked()
-	{
-		if (waveCoroutine != null)
-		{
-			StopCoroutine(waveCoroutine);
-		}
 
-		DestroyPreviousEnemies();
-		currentWaveIndex++;
+   /* public void EndRoundAndContinue()
+    {
+        // Destroy leftover enemies/sons
+        DestroyPreviousEnemies();
 
-		if (currentWaveIndex < waves.Length)
-		{
-			waveCoroutine = StartCoroutine(StartWaves());
-		}
-		else
-		{
-			Debug.Log("All waves completed!");
-		}
-	}
+        // Reset round state
+        ResetRound();
+
+        // Start the next round after 2 seconds
+        StartCoroutine(StartNextRound());
+    }
+
+    public System.Collections.IEnumerator StartNextRound()
+    {
+        yield return new WaitForSeconds(2f); // Delay before next wave
+        StartCoroutine(WaveSpawner.Instance.StartWaves());
+    }*/
 
 }
