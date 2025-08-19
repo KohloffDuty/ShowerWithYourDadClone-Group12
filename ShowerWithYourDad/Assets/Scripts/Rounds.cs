@@ -32,7 +32,12 @@ public class WaveSpawner : MonoBehaviour
 	public static WaveSpawner Instance;
 
 	private Coroutine waveCoroutine;
-	private void Awake()
+ 
+    public AudioSource src;
+    public AudioClip Coin; 
+    public AudioClip WrongHit;
+
+    private void Awake()
 	{
 		if (Instance == null)
 		{
@@ -59,7 +64,7 @@ public class WaveSpawner : MonoBehaviour
 		}
 	}
 
-	private IEnumerator StartWaves()
+	public IEnumerator StartWaves()
 	{
 		while (currentWaveIndex < waves.Length)
 		{
@@ -88,10 +93,15 @@ public class WaveSpawner : MonoBehaviour
 		}
 	}
 
-    private void DestroyPreviousEnemies()
+    public void DestroyPreviousEnemies()
     {
         // Destroy enemies
-        GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        List<GameObject> existingEnemies = new List<GameObject>();  
+
+        existingEnemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        existingEnemies.AddRange(GameObject.FindGameObjectsWithTag("EnemyC"));
+        existingEnemies.AddRange(GameObject.FindGameObjectsWithTag("EnemyW"));
+
         foreach (GameObject enemy in existingEnemies)
         {
             Destroy(enemy);
@@ -215,25 +225,13 @@ public class WaveSpawner : MonoBehaviour
 
 		RoundNumberText.gameObject.SetActive(false);
 	}
+    public void PlaySound(AudioClip sound)
+    {
+        Instance.src.clip = sound;
+        Instance.src.Play();
+    }
 
-	public void OnDadClicked()
-	{
-		if (waveCoroutine != null)
-		{
-			StopCoroutine(waveCoroutine);
-		}
 
-		DestroyPreviousEnemies();
-		currentWaveIndex++;
 
-		if (currentWaveIndex < waves.Length)
-		{
-			waveCoroutine = StartCoroutine(StartWaves());
-		}
-		else
-		{
-			Debug.Log("All waves completed!");
-		}
-	}
 
 }

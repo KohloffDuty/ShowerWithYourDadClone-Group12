@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7360312196209080963}
   - component: {fileID: -4180094780664182829}
   - component: {fileID: -2452894539758708648}
+  - component: {fileID: -8123510241370789959}
   m_Layer: 0
   m_Name: vanillaKid
   m_TagString: Vanilla
@@ -179,5 +180,18 @@ MonoBehaviour:
   chocolateSon: {fileID: 3999258163237791257, guid: fd44a85155ba5f242be5865b5c23ad5f, type: 3}
   caramelSon: {fileID: 7201847267762199223, guid: d3d8e5088b3f08349be961bf0a724061, type: 3}
   vanillaSon: {fileID: 3645382543473835879}
-  score: {fileID: 0}
   points: 10
+--- !u!114 &-8123510241370789959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645382543473835879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43a73f80ee898d429ba09136c0de2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 10
+  VanillaSon: {fileID: 3645382543473835879}

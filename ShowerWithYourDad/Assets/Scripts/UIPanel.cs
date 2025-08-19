@@ -10,10 +10,17 @@ public class UIPanel : MonoBehaviour
 	//public TMP_Text timerText; // Assign in Inspector
 	public TMP_Text scoreText;
 	public float score = 0;
-
-	//public GameObject endPanel;
-
-	void Start()
+	public static UIPanel Instance1;
+    //public GameObject endPanel;
+    private void Awake()
+    {
+        if (Instance1 == null)
+        {
+            Instance1 = this;
+        }
+        Time.timeScale = 1.0f;
+    }
+    void Start()
 	{
 		currentTime = startTime;
 		score = 0;

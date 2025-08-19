@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1442097421468663380}
   - component: {fileID: -8572956196437616929}
   - component: {fileID: 8640599856720001111}
+  - component: {fileID: 3303031352089059736}
   m_Layer: 0
   m_Name: caramelKid
   m_TagString: Caramel
@@ -179,5 +180,18 @@ MonoBehaviour:
   chocolateSon: {fileID: 2820416077298083138, guid: e8530979114d51b4aa87fd0ccc229d16, type: 3}
   caramelSon: {fileID: 7201847267762199223}
   vanillaSon: {fileID: 3645382543473835879, guid: bb91f36ab22a103479c46d11dca664f5, type: 3}
-  score: {fileID: 0}
+  points: 10
+--- !u!114 &3303031352089059736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7201847267762199223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b57b9239bb48842ad162a028d18870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CaramelSon: {fileID: 7201847267762199223}
   points: 10
