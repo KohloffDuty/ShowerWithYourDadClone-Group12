@@ -17,9 +17,10 @@ public class ChocolateCollider1 : MonoBehaviour
         if (collision.CompareTag("Obstacle"))
         {
             roundEnded = true;
-            StartCoroutine(Player.instance2.SlowDown());
+            
             Debug.Log("Hit an obstacle!");
-           // SafeEndRound();
+            StartCoroutine(Player.instance2.SlowDown());
+            // SafeEndRound();
             return;
         }
 

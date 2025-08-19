@@ -20,7 +20,7 @@ public class VanillaCollider : MonoBehaviour
 
             Debug.Log("Hit an obstacle!");
             StartCoroutine(Player.instance2.SlowDown());
-            SafeEndRound();
+           // SafeEndRound();
             return;
         }
 
