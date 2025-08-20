@@ -8,13 +8,12 @@ public class LeaderBoard : MonoBehaviour
 {
 	//TextAsset FilePath = Resources.Load<TextAsset>("ScoreBoard");
 	//private static string FilePath => Path.GetFullPath(Path.Combine(Application.dataPath, "Scripts", "ScoreBoard.txt"));
-	private static string FilePath => Path.Combine(Application.streamingAssetsPath, "ScoreBoard.txt");
-	public static List<LeaderboardEntry> leaderboardEntries = new();
+	private string FilePath => Path.Combine(Application.streamingAssetsPath, "ScoreBoard.txt");
+	public List<LeaderboardEntry> leaderboardEntries = new();
 	public TMPro.TextMeshProUGUI entriesText;
 
 	private void Start()
 	{
-		Debug.Log(FilePath);
 		if (SceneManager.GetActiveScene().name == "Start") { Load(); }
 	}
 
@@ -34,6 +33,11 @@ public class LeaderBoard : MonoBehaviour
 					index = i;
 					break;
 				}
+			}
+			else
+			{
+				index = i;
+				break;
 			}
 		}
 
@@ -68,7 +72,7 @@ public class LeaderBoard : MonoBehaviour
 
 		if (!File.Exists(FilePath)) { return; }
 
-		if (entriesText != null && updateUI) { entriesText.text = ""; }
+		if (entriesText != null && updateUI) { entriesText.text = string.Empty; }
 
 		foreach (var line in File.ReadAllLines(FilePath))
 		{
@@ -78,7 +82,7 @@ public class LeaderBoard : MonoBehaviour
 				if (parts.Length == 3)
 				{
 					// Add the line to the leaderboard textbox
-					if (entriesText != null && updateUI) { entriesText.text += (parts[0] + "\t\t\t" + parts[1] + "\t\t\t" + parts[2] + "\r\n"); }
+					if (entriesText != null && updateUI) { entriesText.text += (parts[0].Trim() + "\t\t\t" + parts[1].Trim() + "\t\t\t" + parts[2].Trim() + "\r\n"); }
 
 					leaderboardEntries.Add(new LeaderboardEntry
 					{
@@ -94,7 +98,7 @@ public class LeaderBoard : MonoBehaviour
 	public bool MadeIt(int newScore)
 	{
 		if (leaderboardEntries.Count == 0) { Load(false); }
-		return (newScore > int.Parse(leaderboardEntries[leaderboardEntries.Count - 1].score));
+		return int.TryParse(leaderboardEntries[leaderboardEntries.Count - 1].score, out int lowestScore) ? (newScore > lowestScore) : true;
 	}
 }
 

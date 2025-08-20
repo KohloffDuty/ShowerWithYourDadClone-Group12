@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
+
 public class StartPanel : MonoBehaviour
 {
 	//public Button start;
@@ -11,14 +12,13 @@ public class StartPanel : MonoBehaviour
 	public TMPro.TextMeshProUGUI congratsText;
 	public TMPro.TextMeshProUGUI enterInitialsText;
 	public TMPro.TextMeshProUGUI scoreText;
-	public TMPro.TextMeshProUGUI gameStateText;
+	//public TMPro.TextMeshProUGUI gameStateText;
 	public TMP_InputField initialsInput;
-	public static string playerInitials;
+	//public static string playerInitials;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 
-
 	public void Start()
-	{
+	{		
 		string sceneName = SceneManager.GetActiveScene().name;
 
 		switch (sceneName)
@@ -26,15 +26,15 @@ public class StartPanel : MonoBehaviour
 			case "Start":
 				break;
 
-			case "Duplicate":
+			case "KulaniDuplicate":
 				break;
 
 			case "End":
-				scoreText.text = "Your final score was: " + Player.instance2.points.ToString();
+				scoreText.text = "Your final score was: " + UIPanel.Instance1.score.ToString();
 
 				//gameStateText.text = GameInfo.PlayerWon ? "YOU WON" : "YOU LOST";
-
-				if (leaderboard.MadeIt(Player.instance2.points))
+				
+				if (leaderboard.MadeIt(UIPanel.Instance1.score))
 				{
 					madeTop10 = true;
 					initialsInput.gameObject.SetActive(true);
@@ -54,7 +54,6 @@ public class StartPanel : MonoBehaviour
 				}
 				break;
 		}
-
 	}
 
 	public void Update()
@@ -63,7 +62,7 @@ public class StartPanel : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
-				if (madeTop10) { leaderboard.Save(initialsInput.text, Player.instance2.points); }
+				if (madeTop10) { leaderboard.Save(initialsInput.text, UIPanel.Instance1.score); }
 				SceneManager.LoadScene("Start");
 			}
 		}
@@ -71,17 +70,16 @@ public class StartPanel : MonoBehaviour
 
 	public void LoadScene()
 	{
-		SceneManager.LoadScene("Duplicate");
+		SceneManager.LoadScene("KulaniDuplicate");
 	}
 
 	public void Restart()
 	{
-		SceneManager.LoadScene("Duplicate");
+		SceneManager.LoadScene("KulaniDuplicate");
 	}
 
 	public void Quit()
 	{
 		Application.Quit();
 	}
-
 }

@@ -27,18 +27,20 @@ public class Player : MonoBehaviour
 	public int points = 15;
 	public static Player instance2;
 
+	private Coroutine slowDownCoroutine = null;
+	private Coroutine stopCoroutine = null;
+	private Coroutine flashCoroutine = null;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 		sr = GetComponent<SpriteRenderer>();
 		originalColor = sr.color;
 	}
+
 	private void Awake()
 	{
-		if (instance2 == null)
-		{
-			instance2 = this;
-		}
+		if (instance2 == null) { instance2 = this; }
 		Time.timeScale = 1.0f;
 	}
 
@@ -58,7 +60,6 @@ public class Player : MonoBehaviour
 		rb.MovePosition(rb.position + moveInput * moveSpeed * Time.fixedDeltaTime);
 	}
 
-
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		//Collision between chocolate dad and son
@@ -72,18 +73,20 @@ public class Player : MonoBehaviour
 		//	}
 		//}
 
-
-
 		if (collision.gameObject.CompareTag("Obstacle") && collision.gameObject.layer == LayerMask.NameToLayer("Puddle"))
 		{
-			StartCoroutine(SlowDown());
+			slowDownCoroutine = StartCoroutine(SlowDown());
 		}
-
 
 		if (collision.gameObject.CompareTag("Obstacle") && collision.gameObject.layer == LayerMask.NameToLayer("Sign"))
 		{
-			StartCoroutine(Stop());
-			StartCoroutine(FlashRedCoroutine());
+			stopCoroutine = StartCoroutine(Stop());
+			flashCoroutine = StartCoroutine(FlashRedCoroutine());
+
+			if (UIPanel.Instance1 != null)
+			{
+				UIPanel.Instance1.AddScore(points);
+			}
 		}
 	}
 
@@ -92,13 +95,15 @@ public class Player : MonoBehaviour
 		moveSpeed = 2f; // Apply slow
 		yield return new WaitForSeconds(1f);
 		moveSpeed = 5f; // Restore normal speed
+		StopCoroutine(slowDownCoroutine);
 	}
 
-	private System.Collections.IEnumerator Stop()
+	public System.Collections.IEnumerator Stop()
 	{
 		moveSpeed = 0f; // Apply slow
 		yield return new WaitForSeconds(0.75f);
 		moveSpeed = 5f; // Restore normal speed
+		StopCoroutine(stopCoroutine);
 	}
 
 	public void EndRoundAndContinue()
@@ -120,7 +125,7 @@ public class Player : MonoBehaviour
 	}
 
 	
-	private IEnumerator FlashRedCoroutine()
+	public IEnumerator FlashRedCoroutine()
 	{
 		float duration = 2f; // flash time
 		float elapsed = 0f;
@@ -139,5 +144,6 @@ public class Player : MonoBehaviour
 
 		// Ensure it ends on original color
 		sr.color = originalColor;
+		StopCoroutine(flashCoroutine);
 	}
 }

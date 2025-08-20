@@ -210,7 +210,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1581,6 +1581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd76d262b5bb99a4f936419be3f968df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaderboardEntries: []
   entriesText: {fileID: 105712547}
 --- !u!114 &1323118089
 MonoBehaviour:
@@ -1594,7 +1595,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76d64f2de80bb9948b5ae052ca3251d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: {fileID: 0}
+  leaderboard: {fileID: 0}
+  congratsText: {fileID: 0}
+  enterInitialsText: {fileID: 0}
+  scoreText: {fileID: 0}
+  initialsInput: {fileID: 0}
 --- !u!1 &1389385660
 GameObject:
   m_ObjectHideFlags: 0
