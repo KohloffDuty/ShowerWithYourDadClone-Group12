@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4973825878549127965}
   - component: {fileID: 956978180443145439}
   - component: {fileID: 5100435021500447087}
+  - component: {fileID: 5430442393711895279}
+  - component: {fileID: 2356531211549246879}
   m_Layer: 6
   m_Name: Player
   m_TagString: chocolate
@@ -131,10 +133,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 7
   chocolateSon: {fileID: 2820416077298083138}
-  caramelSon: {fileID: 0}
-  vanillaSon: {fileID: 0}
-  score: {fileID: 0}
-  points: 10
+  caramelSon: {fileID: 7201847267762199223, guid: d3d8e5088b3f08349be961bf0a724061, type: 3}
+  vanillaSon: {fileID: 3645382543473835879, guid: bb91f36ab22a103479c46d11dca664f5, type: 3}
+  points: 15
 --- !u!61 &5100435021500447087
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -181,3 +182,39 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5430442393711895279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820416077298083138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77bf1e82d1af4f42a191cc9929c02c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 10
+  ChocolateDad: {fileID: 6731048019753198010, guid: 0baa866252613d54683060a3d0725d3a, type: 3}
+--- !u!95 &2356531211549246879
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820416077298083138}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ad0261a6683c09459ba55cf3938fa86, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -1,2 +1,15 @@
 fileFormatVersion: 2
 guid: 97fa18f3526109948849bef5dfca429a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - chocolateSon: {fileID: 3999258163237791257, guid: fd44a85155ba5f242be5865b5c23ad5f, type: 3}
+  - caramelSon: {fileID: 7201847267762199223, guid: d3d8e5088b3f08349be961bf0a724061, type: 3}
+  - vanillaSon: {fileID: 3645382543473835879, guid: bb91f36ab22a103479c46d11dca664f5, type: 3}
+  - score: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
