@@ -75,13 +75,13 @@ public class Player : MonoBehaviour
 
 		if (collision.gameObject.CompareTag("Obstacle") && collision.gameObject.layer == LayerMask.NameToLayer("Puddle"))
 		{
-			slowDownCoroutine = StartCoroutine(SlowDown());
+			Start_SlowDownCoroutine();
 		}
 
 		if (collision.gameObject.CompareTag("Obstacle") && collision.gameObject.layer == LayerMask.NameToLayer("Sign"))
 		{
-			stopCoroutine = StartCoroutine(Stop());
-			flashCoroutine = StartCoroutine(FlashRedCoroutine());
+			Start_StopCoroutine();
+			Start_FlashCoroutine();
 
 			if (UIPanel.Instance1 != null)
 			{
@@ -90,7 +90,22 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	public System.Collections.IEnumerator SlowDown()
+	public void Start_SlowDownCoroutine()
+	{
+		slowDownCoroutine = StartCoroutine(SlowDown());
+	}
+
+	public void Start_StopCoroutine()
+	{
+		stopCoroutine = StartCoroutine(Stop());
+	}
+
+	public void Start_FlashCoroutine()
+	{
+		flashCoroutine = StartCoroutine(FlashRedCoroutine());
+	}
+
+	private System.Collections.IEnumerator SlowDown()
 	{
 		moveSpeed = 2f; // Apply slow
 		yield return new WaitForSeconds(1f);
@@ -98,7 +113,7 @@ public class Player : MonoBehaviour
 		StopCoroutine(slowDownCoroutine);
 	}
 
-	public System.Collections.IEnumerator Stop()
+	private System.Collections.IEnumerator Stop()
 	{
 		moveSpeed = 0f; // Apply slow
 		yield return new WaitForSeconds(0.75f);
@@ -125,7 +140,7 @@ public class Player : MonoBehaviour
 	}
 
 	
-	public IEnumerator FlashRedCoroutine()
+	private IEnumerator FlashRedCoroutine()
 	{
 		float duration = 2f; // flash time
 		float elapsed = 0f;

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ChocolateCollider1 : MonoBehaviour
 {
@@ -18,7 +17,10 @@ public class ChocolateCollider1 : MonoBehaviour
 		if (collision.CompareTag("Obstacle"))
 		{
 			roundEnded = true;
+
 			Debug.Log("Hit an obstacle!");
+			Player.instance2.Start_SlowDownCoroutine();
+			// SafeEndRound();
 			return;
 		}
 
@@ -80,7 +82,7 @@ public class ChocolateCollider1 : MonoBehaviour
 			Player player = FindAnyObjectByType<Player>();
 			if (player != null)
 			{
-				WaveSpawner.Instance.EmergencyEndRoundAndContinue();
+				player.EndRoundAndContinue();
 			}
 		}
 	}

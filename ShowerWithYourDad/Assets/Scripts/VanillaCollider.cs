@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class VanillaCollider : MonoBehaviour
 {
@@ -20,6 +19,8 @@ public class VanillaCollider : MonoBehaviour
 			roundEnded = true;
 
 			Debug.Log("Hit an obstacle!");
+			Player.instance2.Start_SlowDownCoroutine();
+			// SafeEndRound();
 			return;
 		}
 
@@ -83,7 +84,7 @@ public class VanillaCollider : MonoBehaviour
 			Player player = FindAnyObjectByType<Player>();
 			if (player != null)
 			{
-				WaveSpawner.Instance.EmergencyEndRoundAndContinue();
+				player.EndRoundAndContinue();
 			}
 		}
 	}

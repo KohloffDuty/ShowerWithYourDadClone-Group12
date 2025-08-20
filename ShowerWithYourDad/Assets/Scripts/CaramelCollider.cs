@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CaramelCollider : MonoBehaviour
 {
@@ -12,10 +11,16 @@ public class CaramelCollider : MonoBehaviour
 	{
 		if (roundEnded) return;
 
+		Debug.Log($"{gameObject.name} (son) collided with {collision.gameObject.name}");
+
 		// Handle obstacles first
 		if (collision.CompareTag("Obstacle"))
 		{
 			roundEnded = true;
+
+			Debug.Log("Hit an obstacle!");
+			Player.instance2.Start_SlowDownCoroutine();
+			// SafeEndRound();
 			return;
 		}
 
@@ -76,7 +81,7 @@ public class CaramelCollider : MonoBehaviour
 			Player player = FindAnyObjectByType<Player>();
 			if (player != null)
 			{
-				WaveSpawner.Instance.EmergencyEndRoundAndContinue();
+				player.EndRoundAndContinue();
 			}
 		}
 	}

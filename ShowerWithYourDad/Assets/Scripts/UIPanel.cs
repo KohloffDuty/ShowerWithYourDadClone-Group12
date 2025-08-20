@@ -6,11 +6,9 @@ public class UIPanel : MonoBehaviour
 	public float startTime = 30f; // Time in seconds
 	private float currentTime;
 
-	//public TMP_Text timerText; // Assign in Inspector
 	public TMP_Text scoreText;
 	public int score = 0;
 	public static UIPanel Instance1;
-	//public GameObject endPanel;
 	private void Awake()
 	{
 		if (Instance1 == null)
@@ -36,7 +34,6 @@ public class UIPanel : MonoBehaviour
 		{
 			currentTime = 0;
 		}
-
 	}
 
 	// Updates the score

@@ -6,17 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/KulaniDuplicate.unity
+    guid: 5b1c1f4df16072141ae5ba22d2a8e422
+  - enabled: 1
     path: Assets/Scenes/Start.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Duplicate.unity
-    guid: 4955defdf07f98f408f8d34f88074628
-  - enabled: 1
     path: Assets/Scenes/End.unity
     guid: 1a254f67388c549499f02c8e0c71cbbb
-  - enabled: 1
-    path: Assets/Scenes/KulaniDuplicate.unity
-    guid: 5b1c1f4df16072141ae5ba22d2a8e422
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0
