@@ -64,7 +64,6 @@ public class WaveSpawner : MonoBehaviour
 
 		if (waves.Length == currentWaveIndex && currentTime <= 0)
 		{
-			Debug.Log("here");
 			SceneManager.LoadScene("End");
 		}
 	}
@@ -223,7 +222,6 @@ public class WaveSpawner : MonoBehaviour
 	}
 	public void PlaySound(AudioClip sound)
 	{
-		if (sound == null) { Debug.Log("WaveSpawner_Instance", WaveSpawner.Instance); }
 		Instance.src.clip = sound;
 		Instance.src.Play();
 	}

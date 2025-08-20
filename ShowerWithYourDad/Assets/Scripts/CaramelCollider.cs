@@ -12,40 +12,28 @@ public class CaramelCollider : MonoBehaviour
 	{
 		if (roundEnded) return;
 
-		Debug.Log($"{gameObject.name} (son) collided with {collision.gameObject.name}");
-
 		// Handle obstacles first
 		if (collision.CompareTag("Obstacle"))
 		{
 			roundEnded = true;
-			//StartCoroutine(Player.instance2.SlowDown());
-			Debug.Log("Hit an obstacle!");
-			//SafeEndRound();
 			return;
 		}
-		//else
-		//{
-			// Check if this is the correct dad
-			if (collision.gameObject == CaramelDad)
-			{
-				HandleSuccess("Found correct dad!");
-			}
-			// Check if this is a wrong dad (another caramel)
-			else if (collision.CompareTag("EnemyC") || collision.CompareTag("Caramel"))
-			{
-				HandleSuccess("Found correct dad!");
-			}
-			// Anything else
-			else
-			{
-				HandleWrongCollision("Unexpected collision!");
-			}
-		//}
 
-		//if (roundEnded = true && WaveSpawner.waves.Length == WaveSpawner.currentWaveIndex + 1)
-		//{
-		//	SceneManager.LoadScene("End");
-		//}
+		// Check if this is the correct dad
+		if (collision.gameObject == CaramelDad)
+		{
+			HandleSuccess("Found correct dad!");
+		}
+		// Check if this is a wrong dad (another caramel)
+		else if (collision.CompareTag("EnemyC") || collision.CompareTag("Caramel"))
+		{
+			HandleSuccess("Found correct dad!");
+		}
+		// Anything else
+		else
+		{
+			HandleWrongCollision("Unexpected collision!");
+		}
 	}
 
 	private void HandleSuccess(string message)
@@ -56,7 +44,7 @@ public class CaramelCollider : MonoBehaviour
 			UIPanel.Instance1.AddScore(points);
 		}
 
-		//if (WaveSpawner.Instance != null)
+		if (WaveSpawner.Instance != null)
 		{
 			WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.Coin);
 		}

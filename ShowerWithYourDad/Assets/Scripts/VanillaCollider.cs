@@ -20,34 +20,24 @@ public class VanillaCollider : MonoBehaviour
 			roundEnded = true;
 
 			Debug.Log("Hit an obstacle!");
-			//StartCoroutine(Player.instance2.SlowDown());
-			//SafeEndRound();
 			return;
 		}
-		//else
-		//{
-			// Check if this is the correct dad
-			if (collision.gameObject == VanillaDad)
-			{
-				HandleSuccess("Found correct dad!");
-			}
-			// Check if this is a wrong dad (another vanilla)
-			else if (collision.CompareTag("EnemyW") || collision.CompareTag("Vanilla"))
-			{
-				HandleSuccess("Found correct dad!");
-			}
-			// Anything else
-			else
-			{
-				HandleWrongCollision("Unexpected collision!");
-			}
-		//}
 
-		//if (roundEnded = true && WaveSpawner.waves.Length == WaveSpawner.currentWaveIndex + 1)
-		//{
-		//	SceneManager.LoadScene("End");
-		//}
-
+		// Check if this is the correct dad
+		if (collision.gameObject == VanillaDad)
+		{
+			HandleSuccess("Found correct dad!");
+		}
+		// Check if this is a wrong dad (another vanilla)
+		else if (collision.CompareTag("EnemyW") || collision.CompareTag("Vanilla"))
+		{
+			HandleSuccess("Found correct dad!");
+		}
+		// Anything else
+		else
+		{
+			HandleWrongCollision("Unexpected collision!");
+		}
 	}
 
 	private void HandleSuccess(string message)
@@ -59,11 +49,10 @@ public class VanillaCollider : MonoBehaviour
 			UIPanel.Instance1.AddScore(points);
 		}
 
-		//if (WaveSpawner.Instance != null)
+		if (WaveSpawner.Instance != null)
 		{
 			WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.Coin);
 		}
-		//else { Debug.Log("WaveSpawner_Instance", WaveSpawner.Instance); }
 
 		Debug.Log(message);
 		SafeEndRound();

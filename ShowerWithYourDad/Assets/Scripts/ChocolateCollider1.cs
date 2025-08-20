@@ -18,34 +18,25 @@ public class ChocolateCollider1 : MonoBehaviour
 		if (collision.CompareTag("Obstacle"))
 		{
 			roundEnded = true;
-			//StartCoroutine(Player.instance2.SlowDown());
 			Debug.Log("Hit an obstacle!");
-			// SafeEndRound();
 			return;
 		}
-		//else
-		//{
-			// Check if this is the correct dad
-			if (collision.gameObject == ChocolateDad)
-			{
-				HandleSuccess("Found correct dad!");
-			}
-			// Check if this is a wrong dad (another chocolate)
-			else if (collision.CompareTag("Enemy") || collision.CompareTag("chocolate"))
-			{
-				HandleSuccess("Found correct dad!");
-			}
-			// Anything else
-			else
-			{
-				HandleWrongCollision("Unexpected collision!");
-			}
-		//}
 
-		//if (roundEnded = true && WaveSpawner.waves.Length == WaveSpawner.currentWaveIndex + 1)
-		//{
-		//	SceneManager.LoadScene("End");
-		//}
+		// Check if this is the correct dad
+		if (collision.gameObject == ChocolateDad)
+		{
+			HandleSuccess("Found correct dad!");
+		}
+		// Check if this is a wrong dad (another chocolate)
+		else if (collision.CompareTag("Enemy") || collision.CompareTag("chocolate"))
+		{
+			HandleSuccess("Found correct dad!");
+		}
+		// Anything else
+		else
+		{
+			HandleWrongCollision("Unexpected collision!");
+		}
 	}
 
 	private void HandleSuccess(string message)
@@ -56,7 +47,7 @@ public class ChocolateCollider1 : MonoBehaviour
 			UIPanel.Instance1.AddScore(points);
 		}
 
-		//if (WaveSpawner.Instance != null)
+		if (WaveSpawner.Instance != null)
 		{
 			WaveSpawner.Instance.PlaySound(WaveSpawner.Instance.Coin);
 		}
