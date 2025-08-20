@@ -14,15 +14,7 @@ public class CaramelCollider : MonoBehaviour
 		Debug.Log($"{gameObject.name} (son) collided with {collision.gameObject.name}");
 
 		// Handle obstacles first
-		if (collision.CompareTag("Obstacle"))
-		{
-			roundEnded = true;
-
-			Debug.Log("Hit an obstacle!");
-			Player.instance2.Start_SlowDownCoroutine();
-			// SafeEndRound();
-			return;
-		}
+		if (collision.CompareTag("Obstacle")) { return; }
 
 		// Check if this is the correct dad
 		if (collision.gameObject == CaramelDad)

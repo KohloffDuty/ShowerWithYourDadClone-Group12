@@ -62,17 +62,6 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		//Collision between chocolate dad and son
-		//if (chocolateSon.CompareTag("chocolate"))
-		//{
-		//	if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == LayerMask.NameToLayer("Chocolate"))
-		//	{
-		//		UIPanel.Instance1.AddScore(points);
-		//		Debug.Log("You found your dad!");
-		//		WaveSpawner.Instance.EndRoundAndContinue();
-		//	}
-		//}
-
 		if (collision.gameObject.CompareTag("Obstacle") && collision.gameObject.layer == LayerMask.NameToLayer("Puddle"))
 		{
 			Start_SlowDownCoroutine();
