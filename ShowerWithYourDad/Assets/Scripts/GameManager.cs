@@ -1,25 +1,106 @@
-using System;
 using UnityEngine;
+using System;
 
-public class GameEvents : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static GameManager Instance;
 
-    public static GameEvents instance;
+    [Header("References")]
+    public UIPanel uiPanel;
+    public WaveSpawner waveSpawner;
+
+    [Header("Sound Clips")]
+    public AudioClip coinSound;
+    public AudioClip wrongHitSound;
+   // public AudioClip obstacleHitSound;
+
+    // Events for game actions
+    public static event Action OnRoundEndRequested;
+    public static event Action<int> OnScoreAddRequested;
+    public static event Action<AudioClip> OnSoundPlayRequested;
 
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Events
-    public event Action<int> OnScore;           // Send points
-    public event Action OnRoundSuccess;         // Player found dad
-    public event Action OnRoundFail;            // Wrong or obstacle hit
+    public void AddScore1(int points)
+    {
+        // Update UI directly
+        if (uiPanel != null)
+            uiPanel.AddScore(points);
 
-    // Raise methods
-    public void RaiseScore(int points) => OnScore?.Invoke(points);
-    public void RaiseRoundSuccess() => OnRoundSuccess?.Invoke();
-    public void RaiseRoundFail() => OnRoundFail?.Invoke();
+        // Also notify through event for any other systems
+        OnScoreAddRequested?.Invoke(points);
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        // Play sound directly
+        if (waveSpawner != null && clip != null)
+            waveSpawner.PlaySound(clip);
+
+        // Also notify through event
+        OnSoundPlayRequested?.Invoke(clip);
+    }
+
+    public void PlayCoinSound() => PlaySound(coinSound);
+    public void PlayWrongHitSound() => PlaySound(wrongHitSound);
+   // public void PlayObstacleHitSound() => PlaySound(obstacleHitSound);
+
+    public void EndRound()
+    {
+        OnRoundEndRequested?.Invoke();
+    }
+
+    public void HandleCollisionSuccess(int points, string message)
+    {
+        AddScore1(points);
+        PlayCoinSound();
+        Debug.Log(message);
+        EndRound();
+    }
+
+    public void HandleCollisionFailure(string message, bool playSound = true)
+    {
+        if (playSound)
+            PlayWrongHitSound();
+        Debug.Log(message);
+        EndRound();
+    }
+
+    public void HandleObstacleCollision(string message)
+    {
+       // PlayObstacleHitSound();
+        Debug.Log(message);
+        EndRound();
+    }
+    public void EndRoundAndContinue()
+    {
+        // Your existing round end logic
+        Debug.Log("Round ended via event");
+
+        // Destroy leftover enemies/sons
+        waveSpawner.DestroyPreviousEnemies();
+
+        // Reset round state
+        waveSpawner.ResetRound();
+
+        // Start the next round after 2 seconds
+        StartCoroutine(StartNextRound());
+    }
+    public System.Collections.IEnumerator StartNextRound()
+    {
+        yield return new WaitForSeconds(2f); // Delay before next wave
+        StartCoroutine(waveSpawner.StartWaves());
+    }
+    
 }

@@ -22,12 +22,12 @@ public class Player : MonoBehaviour
 
 	//public UIPanel score;
 	public float points = 10f;
-	public static Player instance2; 
+	//public static Player instance2; 
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
 	}
-    private void Awake()
+  /*  private void Awake()
     {
         if (instance2 == null)
         {
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         }
         Time.timeScale = 1.0f;
     }
-
+  */
     void Update()
 	{
 		// Input from arrow keys
@@ -82,23 +82,53 @@ public class Player : MonoBehaviour
 		moveSpeed = 5f; // Restore normal speed
 	}
 
-    public void EndRoundAndContinue()
+    /* public void EndRoundAndContinue()
+     {
+         // Destroy leftover enemies/sons
+         WaveSpawner.Instance.DestroyPreviousEnemies();
+
+         // Reset round state
+         WaveSpawner.Instance.ResetRound();
+
+         // Start the next round after 2 seconds
+         StartCoroutine(StartNextRound());
+     }
+
+     public System.Collections.IEnumerator StartNextRound()
+     {
+         yield return new WaitForSeconds(2f); // Delay before next wave
+         StartCoroutine(WaveSpawner.Instance.StartWaves());
+     }
+    */
+   
+    private void OnEnable()
     {
-        // Destroy leftover enemies/sons
-        WaveSpawner.Instance.DestroyPreviousEnemies();
-
-        // Reset round state
-        WaveSpawner.Instance.ResetRound();
-
-        // Start the next round after 2 seconds
-        StartCoroutine(StartNextRound());
+        // Subscribe to events
+        GameManager.OnRoundEndRequested += HandleRoundEnd;
+        GameManager.OnScoreAddRequested += HandleScoreAdd;
     }
 
-    public System.Collections.IEnumerator StartNextRound()
+    private void OnDisable()
     {
-        yield return new WaitForSeconds(2f); // Delay before next wave
-        StartCoroutine(WaveSpawner.Instance.StartWaves());
+        // Unsubscribe to prevent memory leaks
+        GameManager.OnRoundEndRequested -= HandleRoundEnd;
+        GameManager.OnScoreAddRequested -= HandleScoreAdd;
     }
 
+    private void HandleRoundEnd()
+    {
+      GameManager.Instance.EndRoundAndContinue();
+    }
 
+    private void HandleScoreAdd(int points)
+    { 
+		GameManager.Instance.AddScore1(points);
+        // Optional: You can handle score-related logic here
+        // This keeps the Player in sync with score changes
+        Debug.Log($"Score added: {points}");
+    }
+
+   
 }
+
+

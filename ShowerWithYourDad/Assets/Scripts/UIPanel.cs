@@ -14,14 +14,15 @@ public class UIPanel : MonoBehaviour
 	public float score = 0;
 	public static UIPanel Instance1;
     //public GameObject endPanel;
-    private void Awake()
+  /*  private void Awake()
     {
         if (Instance1 == null)
         {
             Instance1 = this;
         }
         Time.timeScale = 1.5f;
-    }
+    } 
+  */
     void Start()
 	{
 		currentTime = startTime;
